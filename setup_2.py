@@ -3,6 +3,25 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter import simpledialog
 import zipfile
+import socket
+
+# get the local IP address
+def get_local_ip():
+    """
+    Retrieve the local machine's IPv4 address.
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # The following IP is a non-routable meta-address, used only for transmission
+        # to the local network, ensuring the socket does not actually connect to the internet.
+        s.connect(('10.254.254.254', 1))
+        local_ip = s.getsockname()[0]
+    except Exception:
+        # Use localhost if the above method fails
+        local_ip = '127.0.0.1'
+    finally:
+        s.close()
+    return local_ip
 
 def custom_set_key(dotenv_path, key_to_set, value_to_set, quote_mode="auto", export=False):
     """
@@ -122,7 +141,7 @@ default_values = {
 class EnvDialog(simpledialog.Dialog):
     def body(self, master):
         # Define the necessary variables
-        self.app_url = tk.StringVar()
+        self.app_url = tk.StringVar(value=f"http://{get_local_ip()}")
         self.db_connection = tk.StringVar(value="mysql")
         self.db_host = tk.StringVar(value="127.0.0.1")
         self.db_port = tk.StringVar(value="3306")
@@ -240,32 +259,25 @@ class App:
         return frame
 
     def browse_for_path(self, path_var):
-        folder_selected = filedialog.askdirectory()
-        path_var.set(folder_selected)
+        file_selected = filedialog.askopenfilename(filetypes=[('ZIP files', '*.zip')])
+        path_var.set(file_selected)
 
 
     def deploy(self):
         self.progress.start()
 
-        usb_path = self.usb_path.get()
+        zip_file_path = self.usb_path.get()
         laragon_path = self.laragon_path.get()
 
-        if not usb_path or not laragon_path:
-            messagebox.showerror("Error", "Please provide both paths!")
+        if not zip_file_path or not laragon_path:
+            messagebox.showerror("Error", "Please provide both the zipped folder and Laragon path!")
             return
 
-        # Find the zip file in the usb_path and extract it to the laragon_path
-        for item in os.listdir(usb_path):
-            if item.endswith('.zip'):
-                with zipfile.ZipFile(os.path.join(usb_path, item), 'r') as zip_ref:
-                    self.status.set("Status: Extracting files...")
-                    zip_ref.extractall(laragon_path)
-                project_folder_name = item.rstrip('.zip')
-                break
-        else:
-            self.status.set("Error: No zipped folder found in USB path.")
-            self.progress.stop()
-            return
+        # Extract the selected zip file to the laragon_path
+        with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            self.status.set("Status: Extracting files...")
+            zip_ref.extractall(laragon_path)
+            project_folder_name = os.path.basename(zip_file_path).rstrip('.zip')
 
         # Set working directory to the extracted folder
         extracted_project_path = os.path.join(laragon_path, project_folder_name)
@@ -297,7 +309,7 @@ class App:
 
         # Install dependencies and setup Laravel
         self.status.set("Status: Installing dependencies...")
-        # os.system('composer install')
+        os.system('composer install')
         os.system('npm install')
         os.system('npm run build')
         
@@ -315,6 +327,7 @@ class App:
         self.progress.stop()
         self.status.set("Status: Setup completed!")
         messagebox.showinfo("Success", "Setup completed!")
+        self.root.destroy()
 
 if __name__ == "__main__":
     root = tk.Tk()
