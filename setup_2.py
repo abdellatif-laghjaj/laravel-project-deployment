@@ -217,7 +217,7 @@ class App:
         ttk.Label(root, text="Project Deployment Tool", font=("Helvetica", 18, "bold")).pack(pady=20)
 
         # USB Path Frame
-        self.create_path_frame("USB Path (containing zipped folder and tools):", self.usb_path).pack(pady=10, padx=10)
+        self.create_path_frame("Project ZIP file path (select the zip file)", self.usb_path).pack(pady=10, padx=10)
 
         # Laragon Path Frame
         self.create_path_frame("Laragon WWW Directory:", self.laragon_path).pack(pady=10, padx=10)
