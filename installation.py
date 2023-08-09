@@ -9,7 +9,7 @@ software_setups = {
     "Node.js": "node-v18.16.1.msi"
 }
 
-def center_window(root, width=500, height=400):
+def center_window(root, width=500, height=460):
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
 
@@ -106,15 +106,13 @@ def main():
     progress_bar = ttk.Progressbar(root, orient="horizontal", length=300, mode="determinate", variable=progress_var)
     progress_bar.pack(pady=20)
 
-    # Footer
-    footer_label = tk.Label(root, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE")
-    footer_label.pack(pady=20, side=tk.LEFT)
+    # Footer Frame
+    footer_frame = tk.Frame(root)
+    footer_frame.pack(pady=20)
 
-    heart_label = tk.Label(root, text="❤️", font=("Arial", 12, "bold"), fg="red")
-    heart_label.pack(pady=20, side=tk.LEFT)
-
-    company_label = tk.Label(root, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE")
-    company_label.pack(pady=20, side=tk.LEFT)
+    tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
+    tk.Label(footer_frame, text="❤️", font=("Arial", 12, "bold"), fg="red").pack(side=tk.LEFT)
+    tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
 
     root.mainloop()
 

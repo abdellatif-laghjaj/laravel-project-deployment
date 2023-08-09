@@ -184,7 +184,7 @@ class App:
         # Setup
         self.root = root
         self.root.title("Project Deployment")
-        self.root.geometry("600x400")
+        self.root.geometry("600x460")
         self.center_window()
 
         # Variables
