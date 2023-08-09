@@ -131,7 +131,7 @@ class EnvDialog(simpledialog.Dialog):
         self.db_password = tk.StringVar()
         self.pusher_host = tk.StringVar(value="127.0.0.1")
         self.app_key = tk.StringVar(value="")
-        self.company_url = tk.StringVar(value="www.accesspoint.ma")
+        self.company_url = tk.StringVar(value="")
 
         # Layout the input widgets
         tk.Label(master, text="APP_URL:").grid(row=0)
@@ -162,7 +162,7 @@ class EnvDialog(simpledialog.Dialog):
         tk.Entry(master, textvariable=self.app_key).grid(row=8, column=1)
 
         tk.Label(master, text="COMPANY_URL:").grid(row=9)
-        tk.Entry(master, textvariable=self.app_key).grid(row=9, column=1)
+        tk.Entry(master, textvariable=self.company_url).grid(row=9, column=1)
 
     def apply(self):
         self.result = {
@@ -295,31 +295,25 @@ class App:
                 custom_set_key('.env', key, value)
 
 
-        # Install dependencies
+        # Install dependencies and setup Laravel
         self.status.set("Status: Installing dependencies...")
         # os.system('composer install')
         os.system('npm install')
-
-        # Laravel setup
+        os.system('npm run build')
+        
+        # Setup Laravel
         self.status.set("Status: Setting up Laravel...")
         os.system('php artisan key:generate')
-        os.system('php artisan migrate --seed --force')
+        os.system('php artisan migrate --force')
         os.system('php artisan storage:link')
-
-        # Caching configurations at the end
-        self.status.set("Status: Caching configurations...")
-        os.system('php artisan config:clear')
         os.system('php artisan config:cache')
         os.system('php artisan route:cache')
         os.system('php artisan view:cache')
         os.system('php artisan optimize')
-        
-        # Frontend build (if you're using a tool like webpack or Laravel Mix)
-        self.status.set("Status: Building frontend...")
-        os.system('npm run build')
 
-        # Done
-        self.status.set("Status: Setup complete.")
+        # Setup Vite
+        self.progress.stop()
+        self.status.set("Status: Setup completed!")
         messagebox.showinfo("Success", "Setup completed!")
 
 if __name__ == "__main__":
