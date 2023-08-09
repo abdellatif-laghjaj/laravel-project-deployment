@@ -1,6 +1,4 @@
 import os
-import shutil
-from dotenv import load_dotenv, set_key
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter import simpledialog
@@ -214,6 +212,14 @@ class App:
 
         # Status Label
         ttk.Label(root, textvariable=self.status).pack(pady=10)
+        
+        # Footer Frame
+        footer_frame = tk.Frame(root)
+        footer_frame.pack(pady=20)
+
+        tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
+        tk.Label(footer_frame, text="❤️", font=("Arial", 12, "bold"), fg="red").pack(side=tk.LEFT)
+        tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
 
     def center_window(self):
         window_width = self.root.winfo_reqwidth()
