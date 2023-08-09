@@ -20,16 +20,24 @@ def browse_folder():
 
 def run_composer_install():
     try:
-        progress_var.set(0)
+        # Initiate the progress bar in indeterminate mode
+        progress_bar.configure(mode="indeterminate")
+        progress_bar.start(10) # Start the progress bar animation
+        status_label.config(text="Running Composer Install...", fg="blue")
         cmd = "composer install"
         subprocess.run(cmd, cwd=projectPath, shell=True)
         status_label.config(text="Command completed!", fg="green")
-        for i in range(100):
-            progress_var.set(i)
-            root.update_idletasks()
+
+        # Set the progress bar to complete after command is done
+        progress_bar.stop() # Stop the indeterminate animation
+        progress_bar.configure(mode="determinate")
         progress_var.set(100)
     except Exception as e:
         status_label.config(text=f"Error: {str(e)}", fg="red")
+        # Stop the progress bar if an error occurs
+        progress_bar.stop()
+        progress_bar.configure(mode="determinate")
+        progress_var.set(0)
 
 root = tk.Tk()
 root.title("Laravel Composer Installer")
