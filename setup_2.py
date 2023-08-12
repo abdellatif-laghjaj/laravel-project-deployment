@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter import simpledialog
+import customtkinter as ctk
 import zipfile
 import socket
 
@@ -153,34 +154,34 @@ class EnvDialog(simpledialog.Dialog):
         self.company_url = tk.StringVar(value="")
 
         # Layout the input widgets
-        tk.Label(master, text="APP_URL:").grid(row=0)
+        ctk.CTkLabel(master, text="APP_URL:").grid(row=0)
         tk.Entry(master, textvariable=self.app_url).grid(row=0, column=1)
 
-        tk.Label(master, text="DB_CONNECTION:").grid(row=1)
+        ctk.CTkLabel(master, text="DB_CONNECTION:").grid(row=1)
         tk.Entry(master, textvariable=self.db_connection).grid(row=1, column=1)
 
-        tk.Label(master, text="DB_HOST:").grid(row=2)
+        ctk.CTkLabel(master, text="DB_HOST:").grid(row=2)
         tk.Entry(master, textvariable=self.db_host).grid(row=2, column=1)
 
-        tk.Label(master, text="DB_PORT:").grid(row=3)
+        ctk.CTkLabel(master, text="DB_PORT:").grid(row=3)
         tk.Entry(master, textvariable=self.db_port).grid(row=3, column=1)
 
-        tk.Label(master, text="DB_DATABASE:").grid(row=4)
+        ctk.CTkLabel(master, text="DB_DATABASE:").grid(row=4)
         tk.Entry(master, textvariable=self.db_database).grid(row=4, column=1)
 
-        tk.Label(master, text="DB_USERNAME:").grid(row=5)
+        ctk.CTkLabel(master, text="DB_USERNAME:").grid(row=5)
         tk.Entry(master, textvariable=self.db_username).grid(row=5, column=1)
 
-        tk.Label(master, text="DB_PASSWORD:").grid(row=6)
+        ctk.CTkLabel(master, text="DB_PASSWORD:").grid(row=6)
         tk.Entry(master, textvariable=self.db_password, show="*").grid(row=6, column=1)
 
-        tk.Label(master, text="PUSHER_HOST:").grid(row=7)
+        ctk.CTkLabel(master, text="PUSHER_HOST:").grid(row=7)
         tk.Entry(master, textvariable=self.pusher_host).grid(row=7, column=1)
 
-        tk.Label(master, text="APP_KEY:").grid(row=8)
+        ctk.CTkLabel(master, text="APP_KEY:").grid(row=8)
         tk.Entry(master, textvariable=self.app_key).grid(row=8, column=1)
 
-        tk.Label(master, text="COMPANY_URL:").grid(row=9)
+        ctk.CTkLabel(master, text="COMPANY_URL:").grid(row=9)
         tk.Entry(master, textvariable=self.company_url).grid(row=9, column=1)
 
     def apply(self):
@@ -200,45 +201,42 @@ class EnvDialog(simpledialog.Dialog):
 
 class App:
     def __init__(self, root):
-        # Setup
         self.root = root
         self.root.title("Project Deployment")
         self.root.geometry("600x460")
         self.center_window()
 
         # Variables
-        self.usb_path = tk.StringVar()
-        self.laragon_path = tk.StringVar()
-        self.status = tk.StringVar(value="Status: Waiting...")
+        self.usb_path = ctk.StringVar()
+        self.laragon_path = ctk.StringVar()
+        self.status = ctk.StringVar(value="Status: Waiting...")
         self.usb_path.set('')
         self.laragon_path.set("C:\\laragon\\www")
 
         # Title
-        ttk.Label(root, text="Project Deployment Tool", font=("Helvetica", 18, "bold")).pack(pady=20)
+        ctk.CTkLabel(root, text="Project Deployment Tool", font=("Helvetica", 18, "bold")).pack(pady=20)
 
         # USB Path Frame
-        self.create_path_frame("Project ZIP file path (select the zip file)", self.usb_path).pack(pady=10, padx=10)
+        self.create_path_frame("Project ZIP file path (select the zip file)", self.usb_path, "file").pack(pady=10, padx=10)
 
         # Laragon Path Frame
-        self.create_path_frame("Laragon WWW Directory:", self.laragon_path).pack(pady=10, padx=10)
+        self.create_path_frame("Laragon WWW Directory:", self.laragon_path, "dir").pack(pady=10, padx=10)
 
         # Deploy Button
-        ttk.Button(root, text="Commence Deployment", command=self.deploy).pack(pady=20)
+        ctk.CTkButton(root, text="Commence Deployment", command=self.deploy).pack(pady=20)
 
         # Progress Bar
-        self.progress = ttk.Progressbar(root, orient="horizontal", length=300, mode="indeterminate")
+        self.progress = ctk.CTkProgressBar(root, width=400, height=12)
         self.progress.pack(pady=10)
 
         # Status Label
-        ttk.Label(root, textvariable=self.status).pack(pady=10)
+        ctk.CTkLabel(root, textvariable=self.status).pack(pady=10)
         
         # Footer Frame
-        footer_frame = tk.Frame(root)
+        footer_frame = ctk.CTkFrame(root)
         footer_frame.pack(pady=20)
 
-        tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
-        tk.Label(footer_frame, text="❤️", font=("Arial", 12, "bold"), fg="red").pack(side=tk.LEFT)
-        tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
+        ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20, "bold")).pack(side=tk.LEFT)
 
     def center_window(self):
         window_width = self.root.winfo_reqwidth()
@@ -249,19 +247,22 @@ class App:
         y = int((screen_height - window_height) / 2)
         self.root.geometry(f"+{x}+{y}")
 
-    def create_path_frame(self, label_text, text_var):
-        frame = ttk.Frame(self.root)
-        ttk.Label(frame, text=label_text).pack(side="top", anchor="w")
-        path_entry_frame = ttk.Frame(frame)
+    def create_path_frame(self, label_text, text_var, mode="file"):
+        frame = ctk.CTkFrame(self.root)
+        ctk.CTkLabel(frame, text=label_text).pack(side="top", anchor="w")
+        path_entry_frame = ctk.CTkFrame(frame)
         path_entry_frame.pack(fill="both", expand=True, pady=5)
-        ttk.Entry(path_entry_frame, textvariable=text_var, width=50).pack(side="left", padx=5)
-        ttk.Button(path_entry_frame, text="Browse", command=lambda: self.browse_for_path(text_var)).pack(side="left", padx=5)
+        ctk.CTkEntry(path_entry_frame, textvariable=text_var, width=260).pack(side="left")
+        ctk.CTkButton(path_entry_frame, text="Browse", command=lambda: self.browse_for_path(text_var, mode)).pack(side="left", padx=5)
         return frame
 
-    def browse_for_path(self, path_var):
-        file_selected = filedialog.askopenfilename(filetypes=[('ZIP files', '*.zip')])
-        path_var.set(file_selected)
-
+    def browse_for_path(self, path_var, mode="file"):
+        if mode == "file":
+            file_selected = filedialog.askopenfilename(filetypes=[('ZIP files', '*.zip')])
+            path_var.set(file_selected)
+        elif mode == "dir":
+            dir_selected = filedialog.askdirectory()
+            path_var.set(dir_selected)
 
     def deploy(self):
         self.progress.start()
@@ -330,6 +331,13 @@ class App:
         self.root.destroy()
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = ctk.CTk()
+    # Sets the appearance mode of the application
+    # "System" sets the appearance same as that of the system
+    ctk.set_appearance_mode("System")       
+    
+    # Sets the color of the widgets
+    # Supported themes: green, dark-blue, blue
+    ctk.set_default_color_theme("green")
     app = App(root)
     root.mainloop()
