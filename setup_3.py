@@ -32,13 +32,11 @@ def run_composer_install():
         # Set the progress bar to complete after command is done
         progress_bar.stop() # Stop the indeterminate animation
         progress_bar.configure(mode="determinate")
-        progress_var.set(100)
     except Exception as e:
         status_label.config(text=f"Error: {str(e)}", fg="red")
         # Stop the progress bar if an error occurs
         progress_bar.stop()
         progress_bar.configure(mode="determinate")
-        progress_var.set(0)
 
 root = ctk.CTk()
 root.title("Laravel Composer Installer")
