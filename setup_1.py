@@ -1,4 +1,5 @@
 import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox, filedialog, ttk
 import os
 import subprocess
@@ -79,40 +80,47 @@ def browse_folder():
 def main():
     global path_entry, folderPath, status_label, progress_var, root
 
-    root = tk.Tk()
+    # Sets the appearance mode of the application
+    # "System" sets the appearance same as that of the system
+    ctk.set_appearance_mode("System")       
+    
+    # Sets the color of the widgets
+    # Supported themes: green, dark-blue, blue
+    ctk.set_default_color_theme("green")
+    root = ctk.CTk()
     root.title("Software Installer")
+    root.geometry("500x460")
+
     center_window(root)
 
-    tk.Label(root, text="Tools Installation", font=("Arial", 16, "bold")).pack(pady=10)
+    ctk.CTkLabel(root, text="Tools Installation", font=("Arial", 16, "bold")).pack(pady=10)
 
-    tk.Label(root, text="Please specify the folder containing installers:", font=("Arial", 12)).pack(pady=20)
+    ctk.CTkLabel(root, text="Please specify the folder containing installers:", font=("Arial", 12)).pack(pady=20)
 
-    path_frame = tk.Frame(root)
+    path_frame = ctk.CTkFrame(root)
     path_frame.pack(pady=10)
 
-    path_entry = tk.Entry(path_frame, width=35, font=("Arial", 12))
+    path_entry = ctk.CTkEntry(path_frame, width=260, font=("Arial", 12))
     path_entry.pack(side=tk.LEFT, padx=(0, 10))
 
-    browse_btn = tk.Button(path_frame, text="Browse", command=browse_folder, font=("Arial", 12), height=1)
+    browse_btn = ctk.CTkButton(path_frame, text="Browse", command=browse_folder)
     browse_btn.pack(side=tk.RIGHT)
 
-    btn_install = tk.Button(root, text="Install Softwares", command=install_softwares, font=("Arial", 12), bg="green", fg="white")
+    btn_install = ctk.CTkButton(root, text="Install Softwares", command=install_softwares)
     btn_install.pack(pady=20)
 
-    status_label = tk.Label(root, text="", font=("Arial", 12))
+    status_label = ctk.CTkLabel(root, text="", font=("Arial", 12))
     status_label.pack(pady=20)
 
     progress_var = tk.DoubleVar()
-    progress_bar = ttk.Progressbar(root, orient="horizontal", length=300, mode="determinate", variable=progress_var)
+    progress_bar = ctk.CTkProgressBar(root, width=300)
     progress_bar.pack(pady=20)
 
     # Footer Frame
-    footer_frame = tk.Frame(root)
+    footer_frame = ctk.CTkFrame(root)
     footer_frame.pack(pady=20)
 
-    tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
-    tk.Label(footer_frame, text="❤️", font=("Arial", 12, "bold"), fg="red").pack(side=tk.LEFT)
-    tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
+    ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20)).pack(side=tk.LEFT)
 
     root.mainloop()
 
