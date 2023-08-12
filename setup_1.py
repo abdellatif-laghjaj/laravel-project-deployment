@@ -120,7 +120,7 @@ def main():
     footer_frame = ctk.CTkFrame(root)
     footer_frame.pack(pady=20)
 
-    ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20, "bold")).pack(side=tk.LEFT)
+    ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20)).pack(side=tk.LEFT)
 
     root.mainloop()
 
