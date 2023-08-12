@@ -226,7 +226,7 @@ class App:
         ctk.CTkButton(root, text="Commence Deployment", command=self.deploy).pack(pady=20)
 
         # Progress Bar
-        self.progress = ctk.CTkProgressBar(root, width=400, height=12)
+        self.progress = ctk.CTkProgressBar(root, width=400)
         self.progress.pack(pady=10)
 
         # Status Label
