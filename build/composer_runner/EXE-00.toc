@@ -1,5 +1,5 @@
 ('/home/abdellatif/Documents/GitHub/laravel-project-deployment/dist/composer_runner',
- True,
+ False,
  False,
  False,
  None,
@@ -739,7 +739,7 @@
  [],
  False,
  False,
- 1694174553,
+ 1694174961,
  [('run',
    '/home/abdellatif/.local/lib/python3.10/site-packages/PyInstaller/bootloader/Linux-64bit-intel/run',
    'EXECUTABLE')])
