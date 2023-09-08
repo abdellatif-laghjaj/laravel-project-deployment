@@ -236,7 +236,8 @@ class App:
         footer_frame = ctk.CTkFrame(root)
         footer_frame.pack(pady=20)
 
-        ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20, "bold")).pack(side=tk.LEFT)
+        tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
+        tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
 
     def center_window(self):
         window_width = self.root.winfo_reqwidth()
@@ -317,7 +318,8 @@ class App:
         # Setup Laravel
         self.status.set("Status: Setting up Laravel...")
         os.system('php artisan key:generate')
-        os.system('php artisan migrate --force')
+        os.system('php artisan migrate')
+        os.system('php artisan db:seed')
         os.system('php artisan storage:link')
         os.system('php artisan config:cache')
         os.system('php artisan route:cache')
