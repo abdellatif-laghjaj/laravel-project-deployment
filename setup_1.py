@@ -1,8 +1,8 @@
-import tkinter as tk
-import customtkinter as ctk
-from tkinter import messagebox, filedialog, ttk
 import os
 import subprocess
+from typing import Self
+import customtkinter as ctk
+from tkinter import filedialog, messagebox
 
 software_setups = {
     "Laragon": "laragon.exe",
@@ -46,81 +46,66 @@ def install_softwares():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred during installation: {str(e)}")
 
-
 def install_laragon():
     setupLaragon = os.path.join(folderPath, "laragon.exe")
     subprocess.run([setupLaragon], shell=True)
     os.environ['PATH'] += ";C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64"
     subprocess.run(['setx', 'path', f"%path%;C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64", '/M'], shell=True)
 
-
 def install_composer():
     setupComposer = os.path.join(folderPath, "composer-v2.5.8.exe")
     subprocess.run([setupComposer], shell=True)
 
-
 def install_node():
     setupNode = os.path.join(folderPath, "node-v18.16.1.msi")
     subprocess.run([setupNode], shell=True)
-
 
 def complete_installation():
     status_label.config(text="Installation completed!")
     messagebox.showinfo("Info", "Setup is done, please click on OK to restart your PC!")
     os.system('shutdown /r /t 1')
 
-
 def browse_folder():
     global folderPath
     folderPath = filedialog.askdirectory()
-    path_entry.delete(0, tk.END)
+    path_entry.delete(0, "end")
     path_entry.insert(0, folderPath)
-
 
 def main():
     global path_entry, folderPath, status_label, progress_var, root
 
-    # Sets the appearance mode of the application
-    # "System" sets the appearance same as that of the system
-    ctk.set_appearance_mode("System")       
-    
-    # Sets the color of the widgets
-    # Supported themes: green, dark-blue, blue
-    ctk.set_default_color_theme("green")
     root = ctk.CTk()
     root.title("Software Installer")
     root.geometry("500x460")
 
     center_window(root)
 
-    ctk.CTkLabel(root, text="Tools Installation", font=("Arial", 16, "bold")).pack(pady=10)
+    ctk.CTkLabel(root, text="Tools Installation", font=ctk.CTkFont(size=16, weight="bold")).pack(pady=10)
 
-    ctk.CTkLabel(root, text="Please specify the folder containing installers:", font=("Arial", 12)).pack(pady=20)
+    ctk.CTkLabel(root, text="Please specify the folder containing installers:", font=ctk.CTkFont(size=12)).pack(pady=20)
 
     path_frame = ctk.CTkFrame(root)
     path_frame.pack(pady=10)
 
-    path_entry = ctk.CTkEntry(path_frame, width=260, font=("Arial", 12))
-    path_entry.pack(side=tk.LEFT, padx=(0, 10))
+    path_entry = ctk.CTkEntry(path_frame, width=260, font=ctk.CTkFont(size=12))
+    path_entry.pack(side="left", padx=(0, 10))
 
     browse_btn = ctk.CTkButton(path_frame, text="Browse", command=browse_folder)
-    browse_btn.pack(side=tk.RIGHT)
+    browse_btn.pack(side="right")
 
     btn_install = ctk.CTkButton(root, text="Install Softwares", command=install_softwares)
     btn_install.pack(pady=20)
 
-    status_label = ctk.CTkLabel(root, text="", font=("Arial", 12))
+    status_label = ctk.CTkLabel(root, text="", font=ctk.CTkFont(size=12))
     status_label.pack(pady=20)
 
-    progress_var = tk.DoubleVar()
-    progress_bar = ctk.CTkProgressBar(root, width=300)
+    progress_bar = ctk.CTkProgressBar(root, width=400, height=20)
     progress_bar.pack(pady=20)
 
-    # Footer Frame
     footer_frame = ctk.CTkFrame(root)
     footer_frame.pack(pady=20)
 
-    ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=("Arial", 20)).pack(side=tk.LEFT)
+    ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=ctk.CTkFont(size=12, weight="bold")).pack(side="left")
 
     root.mainloop()
 
