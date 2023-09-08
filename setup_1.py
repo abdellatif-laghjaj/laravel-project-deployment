@@ -7,6 +7,7 @@ from tkinter import filedialog, messagebox
 software_setups = {
     "Laragon": "laragon.exe",
     "Composer": "composer-v2.5.8.exe",
+    "VC_Redist": "VC_redist.x64.exe",
     "Node.js": "node-v18.16.1.msi"
 }
 
@@ -33,14 +34,15 @@ def install_softwares():
 
     try:
         for software, setup in software_setups.items():
-            status_label.config(text=f"Installing {software} ...")
+            status_label.configure(text=f"Installing {software} ...")
             if software == "Laragon":
                 install_laragon()
             elif software == "Composer":
                 install_composer()
+            elif software == "VC_Redist":
+                install_vc_redist()
             elif software == "Node.js":
                 install_node()
-            progress_var.set((list(software_setups.keys()).index(software) + 1) / len(software_setups) * 100)
             root.update_idletasks()
         complete_installation()
     except Exception as e:
@@ -56,12 +58,16 @@ def install_composer():
     setupComposer = os.path.join(folderPath, "composer-v2.5.8.exe")
     subprocess.run([setupComposer], shell=True)
 
+def install_vc_redist():
+    setupVCRedist = os.path.join(folderPath, "VC_redist.x64.exe")
+    subprocess.run([setupVCRedist], shell=True)
+
 def install_node():
     setupNode = os.path.join(folderPath, "node-v18.16.1.msi")
     subprocess.run([setupNode], shell=True)
 
 def complete_installation():
-    status_label.config(text="Installation completed!")
+    status_label.configure(text="Installation completed!")
     messagebox.showinfo("Info", "Setup is done, please click on OK to restart your PC!")
     os.system('shutdown /r /t 1')
 
@@ -72,7 +78,7 @@ def browse_folder():
     path_entry.insert(0, folderPath)
 
 def main():
-    global path_entry, folderPath, status_label, progress_var, root
+    global path_entry, folderPath, status_label, root
 
     root = ctk.CTk()
     root.title("Software Installer")
