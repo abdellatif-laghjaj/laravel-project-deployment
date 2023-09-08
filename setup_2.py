@@ -236,9 +236,7 @@ class App:
         footer_frame = ctk.CTkFrame(root)
         footer_frame.pack(pady=20)
 
-        tk.Label(footer_frame, text="Created with ", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
-        tk.Label(footer_frame, text=" by AccessPoint IT", font=("Arial", 12, "bold"), fg="#4477CE").pack(side=tk.LEFT)
-
+        ctk.CTkLabel(footer_frame, text="Created by AccessPoint IT", font=ctk.CTkFont(size=12, weight="bold")).pack(side="left")
     def center_window(self):
         window_width = self.root.winfo_reqwidth()
         window_height = self.root.winfo_reqheight()
