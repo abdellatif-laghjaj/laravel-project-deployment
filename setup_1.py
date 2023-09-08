@@ -6,8 +6,8 @@ from tkinter import filedialog, messagebox
 
 software_setups = {
     "Laragon": "laragon.exe",
-    "Composer": "composer-v2.5.8.exe",
     "VC_Redist": "VC_redist.x64.exe",
+    "Composer": "composer-v2.5.8.exe",
     "Node.js": "node-v18.16.1.msi"
 }
 
@@ -37,10 +37,10 @@ def install_softwares():
             status_label.configure(text=f"Installing {software} ...")
             if software == "Laragon":
                 install_laragon()
-            elif software == "Composer":
-                install_composer()
             elif software == "VC_Redist":
                 install_vc_redist()
+            elif software == "Composer":
+                install_composer()
             elif software == "Node.js":
                 install_node()
             root.update_idletasks()
