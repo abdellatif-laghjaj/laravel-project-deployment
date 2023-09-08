@@ -39,6 +39,7 @@ def install_softwares():
                 install_laragon()
             elif software == "VC_Redist":
                 install_vc_redist()
+                set_php_path()
             elif software == "Composer":
                 install_composer()
             elif software == "Node.js":
@@ -51,8 +52,6 @@ def install_softwares():
 def install_laragon():
     setupLaragon = os.path.join(folderPath, "laragon.exe")
     subprocess.run([setupLaragon], shell=True)
-    os.environ['PATH'] += ";C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64"
-    subprocess.run(['setx', 'path', f"%path%;C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64", '/M'], shell=True)
 
 def install_composer():
     setupComposer = os.path.join(folderPath, "composer-v2.5.8.exe")
@@ -65,6 +64,10 @@ def install_vc_redist():
 def install_node():
     setupNode = os.path.join(folderPath, "node-v18.16.1.msi")
     subprocess.run([setupNode], shell=True)
+
+def set_php_path():
+    os.environ['PATH'] += ";C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64"
+    subprocess.run(['setx', 'path', f"%path%;C:\\laragon\\bin\\php\\php-8.1.10-Win32-vs16-x64", '/M'], shell=True)
 
 def complete_installation():
     status_label.configure(text="Installation completed!")
