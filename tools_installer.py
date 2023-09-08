@@ -1,6 +1,5 @@
 import os
 import subprocess
-from typing import Self
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
 
