@@ -155,34 +155,34 @@ class EnvDialog(simpledialog.Dialog):
         self.company_url = ctk.StringVar(value="")
 
         # Layout the input widgets
-        ctk.CTkLabel(master, text="APP_URL:").grid(row=0)
+        ctk.CTkLabel(master, text="APP_URL:", text_color="black").grid(row=0)
         ctk.CTkEntry(master, textvariable=self.app_url).grid(row=0, column=1)
 
-        ctk.CTkLabel(master, text="DB_CONNECTION:").grid(row=1)
+        ctk.CTkLabel(master, text="DB_CONNECTION:", text_color="black").grid(row=1)
         ctk.CTkEntry(master, textvariable=self.db_connection).grid(row=1, column=1)
 
-        ctk.CTkLabel(master, text="DB_HOST:").grid(row=2)
+        ctk.CTkLabel(master, text="DB_HOST:", text_color="black").grid(row=2)
         ctk.CTkEntry(master, textvariable=self.db_host).grid(row=2, column=1)
 
-        ctk.CTkLabel(master, text="DB_PORT:").grid(row=3)
+        ctk.CTkLabel(master, text="DB_PORT:", text_color="black").grid(row=3)
         ctk.CTkEntry(master, textvariable=self.db_port).grid(row=3, column=1)
 
-        ctk.CTkLabel(master, text="DB_DATABASE:").grid(row=4)
+        ctk.CTkLabel(master, text="DB_DATABASE:", text_color="black").grid(row=4)
         ctk.CTkEntry(master, textvariable=self.db_database).grid(row=4, column=1)
 
-        ctk.CTkLabel(master, text="DB_USERNAME:").grid(row=5)
+        ctk.CTkLabel(master, text="DB_USERNAME:", text_color="black").grid(row=5)
         ctk.CTkEntry(master, textvariable=self.db_username).grid(row=5, column=1)
 
-        ctk.CTkLabel(master, text="DB_PASSWORD:").grid(row=6)
+        ctk.CTkLabel(master, text="DB_PASSWORD:", text_color="black").grid(row=6)
         ctk.CTkEntry(master, textvariable=self.db_password, show="*").grid(row=6, column=1)
 
-        ctk.CTkLabel(master, text="PUSHER_HOST:").grid(row=7)
+        ctk.CTkLabel(master, text="PUSHER_HOST:", text_color="black").grid(row=7)
         ctk.CTkEntry(master, textvariable=self.pusher_host).grid(row=7, column=1)
 
-        ctk.CTkLabel(master, text="APP_KEY:").grid(row=8)
+        ctk.CTkLabel(master, text="APP_KEY:", text_color="black").grid(row=8)
         ctk.CTkEntry(master, textvariable=self.app_key).grid(row=8, column=1)
 
-        ctk.CTkLabel(master, text="COMPANY_URL:").grid(row=9)
+        ctk.CTkLabel(master, text="COMPANY_URL:", text_color="black").grid(row=9)
         ctk.CTkEntry(master, textvariable=self.company_url).grid(row=9, column=1)
 
     def apply(self):
