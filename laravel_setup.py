@@ -1,3 +1,4 @@
+import fileinput
 import os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -323,6 +324,14 @@ class App:
         os.system('php artisan route:cache')
         os.system('php artisan view:cache')
         os.system('php artisan optimize')
+
+        # After setting the APP_KEY in the .env file, remove the single quotes
+        for line in fileinput.input('.env', inplace=True):
+            if line.startswith('APP_KEY='):
+                # Remove single quotes by replacing them with an empty string
+                line = line.replace("'", "")
+            print(line, end='')
+
 
         # Setup Vite
         self.progress.stop()
