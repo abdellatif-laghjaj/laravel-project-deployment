@@ -143,47 +143,47 @@ default_values = {
 class EnvDialog(simpledialog.Dialog):
     def body(self, master):
         # Define the necessary variables
-        self.app_url = tk.StringVar(value=f"http://{get_local_ip()}")
-        self.db_connection = tk.StringVar(value="mysql")
-        self.db_host = tk.StringVar(value="127.0.0.1")
-        self.db_port = tk.StringVar(value="3306")
-        self.db_database = tk.StringVar()
-        self.db_username = tk.StringVar(value="root")
-        self.db_password = tk.StringVar()
-        self.pusher_host = tk.StringVar(value="127.0.0.1")
-        self.app_key = tk.StringVar(value="")
-        self.company_url = tk.StringVar(value="")
+        self.app_url = ctk.CTkStringVar(value=f"http://{get_local_ip()}")
+        self.db_connection = ctk.CTkStringVar(value="mysql")
+        self.db_host = ctk.CTkStringVar(value="127.0.0.1")
+        self.db_port = ctk.CTkStringVar(value="3306")
+        self.db_database = ctk.CTkStringVar()
+        self.db_username = ctk.CTkStringVar(value="root")
+        self.db_password = ctk.CTkStringVar()
+        self.pusher_host = ctk.CTkStringVar(value="127.0.0.1")
+        self.app_key = ctk.CTkStringVar(value="")
+        self.company_url = ctk.CTkStringVar(value="")
 
         # Layout the input widgets
         ctk.CTkLabel(master, text="APP_URL:").grid(row=0)
-        tk.Entry(master, textvariable=self.app_url).grid(row=0, column=1)
+        ctk.CTkEntry(master, textvariable=self.app_url).grid(row=0, column=1)
 
         ctk.CTkLabel(master, text="DB_CONNECTION:").grid(row=1)
-        tk.Entry(master, textvariable=self.db_connection).grid(row=1, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_connection).grid(row=1, column=1)
 
         ctk.CTkLabel(master, text="DB_HOST:").grid(row=2)
-        tk.Entry(master, textvariable=self.db_host).grid(row=2, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_host).grid(row=2, column=1)
 
         ctk.CTkLabel(master, text="DB_PORT:").grid(row=3)
-        tk.Entry(master, textvariable=self.db_port).grid(row=3, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_port).grid(row=3, column=1)
 
         ctk.CTkLabel(master, text="DB_DATABASE:").grid(row=4)
-        tk.Entry(master, textvariable=self.db_database).grid(row=4, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_database).grid(row=4, column=1)
 
         ctk.CTkLabel(master, text="DB_USERNAME:").grid(row=5)
-        tk.Entry(master, textvariable=self.db_username).grid(row=5, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_username).grid(row=5, column=1)
 
         ctk.CTkLabel(master, text="DB_PASSWORD:").grid(row=6)
-        tk.Entry(master, textvariable=self.db_password, show="*").grid(row=6, column=1)
+        ctk.CTkEntry(master, textvariable=self.db_password, show="*").grid(row=6, column=1)
 
         ctk.CTkLabel(master, text="PUSHER_HOST:").grid(row=7)
-        tk.Entry(master, textvariable=self.pusher_host).grid(row=7, column=1)
+        ctk.CTkEntry(master, textvariable=self.pusher_host).grid(row=7, column=1)
 
         ctk.CTkLabel(master, text="APP_KEY:").grid(row=8)
-        tk.Entry(master, textvariable=self.app_key).grid(row=8, column=1)
+        ctk.CTkEntry(master, textvariable=self.app_key).grid(row=8, column=1)
 
         ctk.CTkLabel(master, text="COMPANY_URL:").grid(row=9)
-        tk.Entry(master, textvariable=self.company_url).grid(row=9, column=1)
+        ctk.CTkEntry(master, textvariable=self.company_url).grid(row=9, column=1)
 
     def apply(self):
         self.result = {
