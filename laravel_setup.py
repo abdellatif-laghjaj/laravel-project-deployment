@@ -332,7 +332,6 @@ class App:
                 line = line.replace("'", "")
             print(line, end='')
 
-
         # Setup Vite
         self.progress.stop()
         self.status.set("Status: Setup completed!")
