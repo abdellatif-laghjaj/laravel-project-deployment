@@ -144,15 +144,15 @@ class EnvDialog(simpledialog.Dialog):
     def body(self, master):
         # Define the necessary variables
         self.app_url = ctk.CTkStringVar(value=f"http://{get_local_ip()}")
-        self.db_connection = ctk.CTkStringVar(value="mysql")
-        self.db_host = ctk.CTkStringVar(value="127.0.0.1")
-        self.db_port = ctk.CTkStringVar(value="3306")
-        self.db_database = ctk.CTkStringVar()
-        self.db_username = ctk.CTkStringVar(value="root")
-        self.db_password = ctk.CTkStringVar()
-        self.pusher_host = ctk.CTkStringVar(value="127.0.0.1")
-        self.app_key = ctk.CTkStringVar(value="")
-        self.company_url = ctk.CTkStringVar(value="")
+        self.db_connection = ctk.StringVar(value="mysql")
+        self.db_host = ctk.StringVar(value="127.0.0.1")
+        self.db_port = ctk.StringVar(value="3306")
+        self.db_database = ctk.StringVar()
+        self.db_username = ctk.StringVar(value="root")
+        self.db_password = ctk.StringVar()
+        self.pusher_host = ctk.StringVar(value="127.0.0.1")
+        self.app_key = ctk.StringVar(value="")
+        self.company_url = ctk.StringVar(value="")
 
         # Layout the input widgets
         ctk.CTkLabel(master, text="APP_URL:").grid(row=0)
