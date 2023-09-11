@@ -143,7 +143,7 @@ default_values = {
 class EnvDialog(simpledialog.Dialog):
     def body(self, master):
         # Define the necessary variables
-        self.app_url = ctk.CTkStringVar(value=f"http://{get_local_ip()}")
+        self.app_url = ctk.StringVar(value=f"http://{get_local_ip()}")
         self.db_connection = ctk.StringVar(value="mysql")
         self.db_host = ctk.StringVar(value="127.0.0.1")
         self.db_port = ctk.StringVar(value="3306")
