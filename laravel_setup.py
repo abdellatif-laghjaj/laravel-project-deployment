@@ -40,7 +40,8 @@ def custom_set_key(dotenv_path, key_to_set, value_to_set, quote_mode="auto", exp
     )
 
     if quote:
-        value_out = "'{}'".format(value_to_set.replace("'", "\\'"))
+        # Remove any existing single quotes
+        value_out = "'{}'".format(value_to_set.replace("'", "\\'").strip("'"))
     else:
         value_out = value_to_set
 
