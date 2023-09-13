@@ -322,7 +322,7 @@ class App:
         # Setup Laravel
         self.status.set("Status: Setting up Laravel...")
         os.system('php artisan key:generate')
-        os.system('php artisan migrate')
+        os.system('php artisan migrate --force')
         os.system('php artisan db:seed')
         os.system('php artisan storage:link')
         os.system('php artisan config:cache')
