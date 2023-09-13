@@ -1,0 +1,5 @@
+dist/
+build/
+laravel_setup.spec
+tools_installer.spec
+composer_installer.spec
