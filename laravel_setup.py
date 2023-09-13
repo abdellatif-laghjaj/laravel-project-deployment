@@ -6,6 +6,7 @@ from tkinter import simpledialog
 import customtkinter as ctk
 import zipfile
 import socket
+import shutil
 
 # get the local IP address
 def get_local_ip():
@@ -35,12 +36,18 @@ def custom_set_key(dotenv_path, key_to_set, value_to_set, quote_mode="auto", exp
     if quote_mode not in ("always", "auto", "never"):
         raise ValueError(f"Unknown quote_mode: {quote_mode}")
 
+    # Define a list of keys that should not be quoted
+    keys_not_to_quote = ["APP_URL", "PUSHER_HOST", "COMPANY_URL"]
+
     quote = (
         quote_mode == "always"
         or (quote_mode == "auto" and not value_to_set.isalnum())
     )
 
-    if quote:
+    if key_to_set in keys_not_to_quote:
+        # Do not add single or double quotes for specific keys
+        value_out = value_to_set
+    elif quote:
         value_out = "'{}'".format(value_to_set.replace("'", "\\'"))
     else:
         value_out = value_to_set
@@ -284,28 +291,26 @@ class App:
         extracted_project_path = os.path.join(laragon_path, project_folder_name)
         os.chdir(extracted_project_path)
 
+        # Copy .env.example to .env
+        shutil.copy(".env.example", ".env")
+
         # Open dialog to set certain env values
         env_values = EnvDialog(self.root).result
 
-        # Load existing .env or create one
-        if not os.path.exists(".env"):
-            with open(".env", "w") as f:
-                f.write("")
+        if "APP_URL" in env_values:
+            custom_set_key('.env', "APP_URL", env_values["APP_URL"])
 
-        # Set the values obtained from the dialog
-        for key, value in env_values.items():
-            # If the value contains special characters or spaces, use double quotes
-            if any(c in value for c in [' ', "'", '"', '\n', '\t']):
-                custom_set_key('.env', key, value, quote_mode="always")
-            else:
-                custom_set_key('.env', key, value)
+        if "DB_DATABASE" in env_values:
+            custom_set_key('.env', "DB_DATABASE", env_values["DB_DATABASE"])
 
-        for key, value in default_values.items():
-            # If the value contains special characters or spaces, use double quotes
-            if any(c in value for c in [' ', "'", '"', '\n', '\t']):
-                custom_set_key('.env', key, value, quote_mode="always")
-            else:
-                custom_set_key('.env', key, value)
+        if "PUSHER_HOST" in env_values:
+            custom_set_key('.env', "PUSHER_HOST", env_values["PUSHER_HOST"])
+
+        if "COMPANY_URL" in env_values:
+            custom_set_key('.env', "COMPANY_URL", env_values["COMPANY_URL"])
+        
+        # set PUSHER_HOST to be the ip
+        custom_set_key('.env', "PUSHER_HOST", get_local_ip())
 
 
         # Install dependencies and setup Laravel
