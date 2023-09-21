@@ -325,10 +325,10 @@ class App:
         os.system('php artisan migrate --force')
         os.system('php artisan db:seed')
         os.system('php artisan storage:link')
-        os.system('php artisan config:cache')
-        os.system('php artisan route:cache')
-        os.system('php artisan view:cache')
-        os.system('php artisan optimize')
+
+        # Clean up
+        os.system('php artisan cache:clear')
+        os.system('php artisan config:clear')
 
         # After setting the APP_KEY in the .env file, remove the single quotes
         for line in fileinput.input('.env', inplace=True):
